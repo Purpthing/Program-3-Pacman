@@ -30,7 +30,32 @@ public final class StarterGhosts extends Controller<EnumMap<GHOST,MOVE>>
 		{			
 			if(game.doesGhostRequireAction(ghost))		//if ghost requires an action
 			{
-				if(game.getGhostEdibleTime(ghost)>0 || closeToPower(game))	//retreat from Ms Pac-Man if edible or if Ms Pac-Man is close to power pill
+				//blinky changes start
+				if (ghost == GHOST.BLINKY) { //ADDED THIS
+
+
+					if(game.getGhostEdibleTime(ghost)>0 || closeToPower(game)) {
+						myMoves.put(ghost,
+								game.getApproximateNextMoveAwayFromTarget(
+										game.getGhostCurrentNodeIndex(ghost),
+										game.getPacmanCurrentNodeIndex(),
+										game.getGhostLastMoveMade(ghost),
+										DM.PATH
+								)
+						);
+					} else {
+						myMoves.put(ghost,
+								game.getNextMoveTowardsTarget(
+										game.getGhostCurrentNodeIndex(ghost),
+										game.getPacmanCurrentNodeIndex(),
+										DM.PATH
+								)
+						);
+						}
+				}
+
+				else if(game.getGhostEdibleTime(ghost)>0 || closeToPower(game)) //ADDED THIS
+				//if(game.getGhostEdibleTime(ghost)>0 || closeToPower(game))	//retreat from Ms Pac-Man if edible or if Ms Pac-Man is close to power pill
 					myMoves.put(ghost,game.getApproximateNextMoveAwayFromTarget(game.getGhostCurrentNodeIndex(ghost),
 							game.getPacmanCurrentNodeIndex(),game.getGhostLastMoveMade(ghost),DM.PATH));
 				else 
@@ -46,7 +71,7 @@ public final class StarterGhosts extends Controller<EnumMap<GHOST,MOVE>>
 				}
 			}
 		}
-
+		//blinky changes end
 		return myMoves;
 	}
 	
