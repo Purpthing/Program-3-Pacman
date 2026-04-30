@@ -1,3 +1,14 @@
+/**
+ * Based on:
+ * Novikov, A., Yakovlev, S., Gushchin, I. (2025)
+ * Exploring the Possibilities of MADDPG for UAV Swarm Control
+ * by Simulating in Pac-Man Environment
+ *
+ * Base code from:
+ * Ms Pac-Man vs Ghosts AI Framework
+ *
+ * Note: In this framework, "SUE" represents Clyde.
+ */
 package pacman.controllers.examples;
 
 import java.util.EnumMap;
