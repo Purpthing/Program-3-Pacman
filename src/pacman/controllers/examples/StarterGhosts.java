@@ -82,6 +82,8 @@ else
         myMoves.put(ghost, possibleMoves[rnd.nextInt(possibleMoves.length)]);
     }
 }
+			}
+		}
 		return myMoves;
 	}
 	
