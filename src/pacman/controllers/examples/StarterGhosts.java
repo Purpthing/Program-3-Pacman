@@ -6,8 +6,6 @@
  *
  * Base code from:
  * Ms Pac-Man vs Ghosts AI Framework
- *
- * Note: In this framework, "SUE" represents Clyde.
  */
 package pacman.controllers.examples;
 
@@ -41,48 +39,49 @@ public final class StarterGhosts extends Controller<EnumMap<GHOST,MOVE>>
 		{			
 			if(game.doesGhostRequireAction(ghost))		//if ghost requires an action
 			{
-				//blinky changes start
-				if (ghost == GHOST.BLINKY) { //ADDED THIS
+				//blinky changes start - Jaidan
+				if (ghost == GHOST.BLINKY) {
 
+    if(game.getGhostEdibleTime(ghost)>0 || closeToPower(game)) {
+        myMoves.put(ghost,game.getApproximateNextMoveAwayFromTarget(game.getGhostCurrentNodeIndex(ghost),game.getPacmanCurrentNodeIndex(),game.getGhostLastMoveMade(ghost),DM.PATH));
+    } else {
+        myMoves.put(ghost,game.getNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(ghost),game.getPacmanCurrentNodeIndex(),DM.PATH));
+    }
+}
 
-					if(game.getGhostEdibleTime(ghost)>0 || closeToPower(game)) {
-						myMoves.put(ghost,
-								game.getApproximateNextMoveAwayFromTarget(
-										game.getGhostCurrentNodeIndex(ghost),
-										game.getPacmanCurrentNodeIndex(),
-										game.getGhostLastMoveMade(ghost),
-										DM.PATH
-								)
-						);
-					} else {
-						myMoves.put(ghost,
-								game.getNextMoveTowardsTarget(
-										game.getGhostCurrentNodeIndex(ghost),
-										game.getPacmanCurrentNodeIndex(),
-										DM.PATH
-								)
-						);
-						}
-				}
+// Inky changes start - Jaidan
+else if (ghost == GHOST.INKY) {
 
-				else if(game.getGhostEdibleTime(ghost)>0 || closeToPower(game)) //ADDED THIS
-				//if(game.getGhostEdibleTime(ghost)>0 || closeToPower(game))	//retreat from Ms Pac-Man if edible or if Ms Pac-Man is close to power pill
-					myMoves.put(ghost,game.getApproximateNextMoveAwayFromTarget(game.getGhostCurrentNodeIndex(ghost),
-							game.getPacmanCurrentNodeIndex(),game.getGhostLastMoveMade(ghost),DM.PATH));
-				else 
-				{
-					if(rnd.nextFloat()<CONSISTENCY)			//attack Ms Pac-Man otherwise (with certain probability)
-						myMoves.put(ghost,game.getApproximateNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(ghost),
-								game.getPacmanCurrentNodeIndex(),game.getGhostLastMoveMade(ghost),DM.PATH));
-					else									//else take a random legal action (to be less predictable)
-					{					
-						MOVE[] possibleMoves=game.getPossibleMoves(game.getGhostCurrentNodeIndex(ghost),game.getGhostLastMoveMade(ghost));
-						myMoves.put(ghost,possibleMoves[rnd.nextInt(possibleMoves.length)]);
-					}
-				}
-			}
-		}
-		//blinky changes end
+    if(game.getGhostEdibleTime(ghost)>0 || closeToPower(game)) {
+		myMoves.put(ghost,game.getApproximateNextMoveAwayFromTarget(game.getGhostCurrentNodeIndex(ghost),game.getPacmanCurrentNodeIndex(),game.getGhostLastMoveMade(ghost),DM.PATH));
+    } else {
+
+        int pacmanPos = game.getPacmanCurrentNodeIndex();
+        MOVE pacmanMove = game.getPacmanLastMoveMade();
+
+        int pinkyTarget = game.getNeighbour(pacmanPos, pacmanMove);
+        if (pinkyTarget == -1) pinkyTarget = pacmanPos;
+
+        int blinkyPos = game.getGhostCurrentNodeIndex(GHOST.BLINKY);
+
+        int target = (blinkyPos + pinkyTarget) / 2;
+
+        myMoves.put(ghost,game.getNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(ghost),target,DM.PATH));
+    }
+}
+else if(game.getGhostEdibleTime(ghost)>0 || closeToPower(game))
+    myMoves.put(ghost, game.getApproximateNextMoveAwayFromTarget(game.getGhostCurrentNodeIndex(ghost),game.getPacmanCurrentNodeIndex(),game.getGhostLastMoveMade(ghost),DM.PATH));
+else 
+{
+    if(rnd.nextFloat()<CONSISTENCY)myMoves.put(ghost,game.getApproximateNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(ghost),game.getPacmanCurrentNodeIndex(),game.getGhostLastMoveMade(ghost),DM.PATH));
+    else
+    {
+        MOVE[] possibleMoves = game.getPossibleMoves(
+            game.getGhostCurrentNodeIndex(ghost),
+            game.getGhostLastMoveMade(ghost));
+        myMoves.put(ghost, possibleMoves[rnd.nextInt(possibleMoves.length)]);
+    }
+}
 		return myMoves;
 	}
 	
@@ -98,3 +97,4 @@ public final class StarterGhosts extends Controller<EnumMap<GHOST,MOVE>>
         return false;
     }
 }
+	
