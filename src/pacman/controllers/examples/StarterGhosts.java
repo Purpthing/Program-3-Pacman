@@ -69,6 +69,26 @@ else if (ghost == GHOST.INKY) {
         myMoves.put(ghost,game.getNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(ghost),target,DM.PATH));
     }
 }
+// Pinky changes start - Kevin
+else if (ghost == GHOST.PINKY) {
+
+    if(game.getGhostEdibleTime(ghost)> 0 || closeToPower(game)){
+        myMoves.put(ghost,game.getApproximateNextMoveAwayFromTarget(game.getGhostCurrentNodeIndex(ghost),game.getPacmanCurrentNodeIndex(),game.getGhostLastMoveMade(ghost),DM.PATH));
+    } else {
+        int pacmanPos = game.getPacmanCurrentNodeIndex();
+        MOVE pacmanMove = game.getPacmanLastMoveMade();
+
+        int pinkyTarget = game.getNeighbour(pacmanPos, pacmanMove);
+        if(pinkyTarget == -1) pinkyTarget = pacmanPos;
+
+        myMoves.put(ghost,game.getNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(ghost),target,DM.PATH));
+    }
+
+
+}
+
+
+// Clyde no changes, uses standard formula - Kevin
 else if(game.getGhostEdibleTime(ghost)>0 || closeToPower(game))
     myMoves.put(ghost, game.getApproximateNextMoveAwayFromTarget(game.getGhostCurrentNodeIndex(ghost),game.getPacmanCurrentNodeIndex(),game.getGhostLastMoveMade(ghost),DM.PATH));
 else 
