@@ -39,8 +39,8 @@ public final class StarterGhosts extends Controller<EnumMap<GHOST,MOVE>>
 		{			
 			if(game.doesGhostRequireAction(ghost))		//if ghost requires an action
 			{
-				//blinky changes start - Jaidan
-				if (ghost == GHOST.BLINKY) {
+				//pinky changes start - Jaidan
+				if (ghost == GHOST.PINKY) {
 
     if(game.getGhostEdibleTime(ghost)>0 || closeToPower(game)) {
         myMoves.put(ghost,game.getApproximateNextMoveAwayFromTarget(game.getGhostCurrentNodeIndex(ghost),game.getPacmanCurrentNodeIndex(),game.getGhostLastMoveMade(ghost),DM.PATH));
@@ -69,8 +69,8 @@ else if (ghost == GHOST.INKY) {
         myMoves.put(ghost,game.getNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(ghost),target,DM.PATH));
     }
 }
-// Pinky changes start - Kevin
-else if (ghost == GHOST.PINKY) {
+// Blinky changes start - Kevin
+else if (ghost == GHOST.BLINKY) {
 
     if(game.getGhostEdibleTime(ghost)> 0 || closeToPower(game)){
         myMoves.put(ghost,game.getApproximateNextMoveAwayFromTarget(game.getGhostCurrentNodeIndex(ghost),game.getPacmanCurrentNodeIndex(),game.getGhostLastMoveMade(ghost),DM.PATH));
@@ -78,10 +78,10 @@ else if (ghost == GHOST.PINKY) {
         int pacmanPos = game.getPacmanCurrentNodeIndex();
         MOVE pacmanMove = game.getPacmanLastMoveMade();
 
-        int pinkyTarget = game.getNeighbour(pacmanPos, pacmanMove);
-        if(pinkyTarget == -1) pinkyTarget = pacmanPos;
+        int blinkyTarget = game.getNeighbour(pacmanPos, pacmanMove);
+        if(blinkyTarget == -1) blinkyTarget = pacmanPos;
 
-        myMoves.put(ghost,game.getNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(ghost),target,DM.PATH));
+        myMoves.put(ghost,game.getNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(ghost),blinkyTarget,DM.PATH));
     }
 
 

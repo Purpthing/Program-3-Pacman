@@ -47,24 +47,25 @@ public class Executor
 
 		/*
 		//run multiple games in batch mode - good for testing.
-		int numTrials=10;
+		//int numTrials=10;
 		exec.runExperiment(new RandomPacMan(),new RandomGhosts(),numTrials);
-		 */
+		*/
 		
 		/*
 		//run a game in synchronous mode: game waits until controllers respond.
 		int delay=5;
 		boolean visual=true;
 		exec.runGame(new RandomPacMan(),new RandomGhosts(),visual,delay);
-  		 */
+		*/
 		
-		///*
+
 		//run the game in asynchronous mode.
+		//THIS ONE ACTUALLY LETS YOU PLAY THE GAME
 		boolean visual=true;
 //		exec.runGameTimed(new NearestPillPacMan(),new AggressiveGhosts(),visual);
-		exec.runGameTimed(new StarterPacMan(),new StarterGhosts(),visual);
-//		exec.runGameTimed(new HumanController(new KeyBoardInput()),new StarterGhosts(),visual);	
-		//*/
+//		exec.runGameTimed(new StarterPacMan(),new StarterGhosts(),visual);
+	exec.runGameTimed(new HumanController(new KeyBoardInput()),new StarterGhosts(),visual);
+
 		
 		/*
 		//run the game in asynchronous mode but advance as soon as both controllers are ready  - this is the mode of the competition.
